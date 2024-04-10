@@ -1,20 +1,18 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const app = express();
-var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://cluster-cgi2dhciwlbr.ap-southeast-2.docdb.amazonaws.com:27017', {
+const dbURI = 'mongodb://HaruniEnginear:rgYv1%5BfE@cluster-cgi2dhciwlbr.ap-southeast-2.docdb.amazonaws.com:27017/docdb-nakamine';
+
+mongoose.connect(dbURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     ssl: true,
-    sslValidate: false,
-    user: 'HaruniEnginear',
-    pass: 'rgYv1[fE',
-    dbName: 'docdb-nakamine'
+    sslValidate: false // 必要に応じて確認
 });
 
 const Cat = mongoose.model('Cat', { name: String });
 
- 
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
@@ -24,15 +22,12 @@ app.get('/add', (req, res) => {
     kitty.save().then(() => console.log('meow'));
 });
 
-app.get('/find', (req, res) => {
-    console.log(Cat.find());
+app.get('/find', async (req, res) => {
+    const cats = await Cat.find();
+    console.log(cats);
+    res.send(cats);
 });
 
 app.listen(3000, () => {
     console.log('Server listening on port 3000');
-})
-
-// mongodb://HaruniEnginear:rgYv1[fE@docdb-nakamine.cluster-cgi2dhciwlbr.ap-southeast-2.docdb.amazonaws.com:27017/?tls=true&tlsCAFile=global-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false
-
-
-
+});
