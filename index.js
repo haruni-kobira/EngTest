@@ -5,7 +5,6 @@ const cfenv = require('cfenv');
 
 
 // Redis
-const redisConfig = appEnv.getService('old-redis-service');
 const client = new Redis({
   host: 'nakamine-cache.gpddhc.clustercfg.apse2.cache.amazonaws.com', // rename the credentials `hostname` to `host`
   port: 6379,
@@ -22,7 +21,7 @@ app.get('/', (req, res) => {
 
 app.get('/add', (req, res) => {
     res.send('Add');
-    redis.set('Book', 'BooBook');
+    client.set('Book', 'BooBook');
     // const kitty = new Cat({ name: 'Ta' });
     // kitty.save().then(() => console.log('meow'));
 });
