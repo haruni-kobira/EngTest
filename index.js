@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const app = express();
 const Redis = require('ioredis');
 const cfenv = require('cfenv');
