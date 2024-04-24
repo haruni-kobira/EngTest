@@ -28,8 +28,8 @@ app.get('/add', (req, res) => {
 
 app.get('/find', async (req, res) => {
     res.send('Find');
-    var res = client.get('Book');
-    res.send(res);
+    var response = client.get('Book');
+    res.send(response);
 
     // const cats = await Cat.find();
     // console.log(cats);
