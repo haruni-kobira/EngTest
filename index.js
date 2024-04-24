@@ -27,13 +27,8 @@ app.get('/add', async (req, res) => {
 });
 
 app.get('/find', async (req, res) => {
-    res.send('Find');
     var response = await client.get('Book');
     res.send(response);
-
-    // const cats = await Cat.find();
-    // console.log(cats);
-    // res.send(cats);
 });
 
 app.listen(3000, () => {
