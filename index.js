@@ -1,31 +1,38 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
+const Redis = require('ioredis');
+const cfenv = require('cfenv');
 
-const dbURI = 'mongodb://HaruniEnginear:rgYv1%5BfE@cluster-cgi2dhciwlbr.ap-southeast-2.docdb.amazonaws.com:27017/docdb-nakamine';
 
-mongoose.connect(dbURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    ssl: true,
-    sslValidate: false // 必要に応じて確認
+// Redis
+const redisConfig = appEnv.getService('old-redis-service');
+const client = new Redis({
+  host: 'nakamine-cache.gpddhc.clustercfg.apse2.cache.amazonaws.com', // rename the credentials `hostname` to `host`
+  port: 6379,
+  password: null,
 });
 
-const Cat = mongoose.model('Cat', { name: String });
 
+
+
+// 接続先
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
 app.get('/add', (req, res) => {
-    const kitty = new Cat({ name: 'Ta' });
-    kitty.save().then(() => console.log('meow'));
+    res.send('Add');
+    redis.set('Book', 'BooBook');
+    // const kitty = new Cat({ name: 'Ta' });
+    // kitty.save().then(() => console.log('meow'));
 });
 
 app.get('/find', async (req, res) => {
-    const cats = await Cat.find();
-    console.log(cats);
-    res.send(cats);
+    res.send('Find');
+    // const cats = await Cat.find();
+    // console.log(cats);
+    // res.send(cats);
 });
 
 app.listen(3000, () => {
