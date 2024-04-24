@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
-app.get('/add', (req, res) => {
+app.get('/add', async (req, res) => {
     res.send('Add');
     await client.set('Book', 'BooBook');
     // const kitty = new Cat({ name: 'Ta' });
