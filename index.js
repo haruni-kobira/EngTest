@@ -21,14 +21,14 @@ app.get('/', (req, res) => {
 
 app.get('/add', (req, res) => {
     res.send('Add');
-    client.set('Book', 'BooBook');
+    await client.set('Book', 'BooBook');
     // const kitty = new Cat({ name: 'Ta' });
     // kitty.save().then(() => console.log('meow'));
 });
 
 app.get('/find', async (req, res) => {
     res.send('Find');
-    var response = client.get('Book');
+    var response = await client.get('Book');
     res.send(response);
 
     // const cats = await Cat.find();
